@@ -61,7 +61,7 @@ public class GameStateSwitcher : MonoBehaviour, IGameStateReacting, IPawnListene
 
 
     float currentTimeSpent = 0f;
-    float timeForPlanning = 30f;
+    float timeForPlanning = 60f;
 
     public Dictionary<GameStates, Action> gameStateUpdateMapping { get; set; }
 
