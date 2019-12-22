@@ -76,10 +76,11 @@ public class GameStateSwitcher : MonoBehaviour, IGameStateReacting, IPawnListene
 
     void ActingUpdate()
     {
-        if (PawnsActingCount > 0 && PawnsActingCount == PawnsFinishedActing)
+        foreach( var go in GameObject.FindGameObjectsWithTag("Pawn"))
         {
-            StateSwitched.Invoke(GameStates.Planning, CurrentSate);
+            if (!go.GetComponent<PawnBehaviour>().pawnPlan.IsComplete) return;
         }
+        StateSwitched.Invoke(GameStates.Planning, CurrentSate);
     }
 
     public void OnStateSwitched(GameStates currentState, GameStates previousState)

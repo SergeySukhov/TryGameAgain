@@ -47,6 +47,7 @@ public class MoveCommand : ICommand
             var pathLength = _speed * Time.deltaTime;
             var curPos = gameObject.transform.position;
             var segment = (path[curIdx] - curPos).magnitude;
+            Animator animator = gameObject.GetComponent<Animator>();
             if ((curPos - path[path.Count - 1]).sqrMagnitude > 0.01f)
             {
                 while (segment < pathLength && curIdx + 1 < path.Count)
@@ -68,11 +69,11 @@ public class MoveCommand : ICommand
                     gameObject.transform.position = path[curIdx] + (curPos - path[0]).normalized * (segment - pathLength);
                     gameObject.transform.forward = (path[0] - curPos).normalized;
                 }
-                gameObject.GetComponent<Animator>().SetInteger("moving", 1);
+                animator.SetInteger("moving", 1);
             }
             else
             {
-                gameObject.GetComponent<Animator>().SetInteger("moving", 0);
+                animator.SetInteger("moving", 0);
                 IsComplete = true;
             }
         }

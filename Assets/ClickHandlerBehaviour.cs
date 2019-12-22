@@ -42,30 +42,31 @@ public class ClickHandlerBehaviour : MonoBehaviour, IGameStateReacting, IPawnAss
 
     void PlanningUpdate()
     {
-        RaycastHit hitInfo = new RaycastHit();
-        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-        if (hitInfo.transform.gameObject.tag == "Pawn")
+        if (Input.GetMouseButtonDown(0))
         {
-            gameObjectClicked = hitInfo.transform.gameObject;
-        }
-        if (PawnAsset != null)
-        {
-            if (Input.GetMouseButtonDown(0))
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hit)
             {
-                if (hitInfo.transform.gameObject.tag != "Pawn")
+                if (hitInfo.transform.gameObject.tag == "Pawn")
                 {
-                    PlacePawn();
+                    gameObjectClicked = hitInfo.transform.gameObject;
+                }
+                if (PawnAsset != null)
+                {
+                    if (hitInfo.transform.gameObject.tag != "Pawn")
+                    {
+                        PlacePawn();
+                    }
+                }
+                else if (gameObjectClicked != null)
+                {
+                    if (gameObjectClicked.tag == "Pawn")
+                        ControllPawn();
                 }
             }
         }
-        else if (gameObjectClicked != null)
-        {
-            if (gameObjectClicked.tag == "Pawn")
-                if (Input.GetMouseButtonDown(0))
-                {
-                    ControllPawn();
-                }
-        }
+        
     }
 
     private void ControllPawn()

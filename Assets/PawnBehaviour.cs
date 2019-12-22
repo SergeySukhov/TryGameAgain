@@ -18,8 +18,6 @@ public class PawnBehaviour : MonoBehaviour, IGameStateReacting
 
     public Dictionary<GameStates, Action> gameStateUpdateMapping { get; set; }
 
-    public List<Vector3> path = null;
-
     FieldBehaviour Field = null;
 
     public float speed = 1f;
@@ -44,7 +42,6 @@ public class PawnBehaviour : MonoBehaviour, IGameStateReacting
         UpdateFunction?.Invoke();
     }
 
-    int curIdx = 0;
     void ActUpdate()
     {
         pawnPlan.Execute();
@@ -69,7 +66,7 @@ public class PawnBehaviour : MonoBehaviour, IGameStateReacting
         }
         if (currentState == GameStates.Acting)
         {
-            path = null;
+
         }
     }
 
@@ -78,7 +75,7 @@ public class PawnBehaviour : MonoBehaviour, IGameStateReacting
         TileBehaviour tb = go2.GetComponent<TileBehaviour>();
         if (tb != null)
         {
-            pawnPlan.AddCommand(new MoveCommand(tb, gameObject, 2));
+            pawnPlan.AddCommand(new MoveCommand(tb, gameObject, speed));
             Debug.Log("added " + go2.transform.position.ToString());
         }
     }
